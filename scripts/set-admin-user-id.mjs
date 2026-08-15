@@ -4,6 +4,7 @@
 //
 // Usage:
 //   npm run set-admin-user-id -- --email=admin@namma-avadi.in --user-id=admin
+//   npm run set-admin-user-id -- --email=admin@namma-avadi.in --user-id=admin --password="secret"
 //
 // Requires .env.local to be populated.
 
@@ -38,9 +39,10 @@ if (!url || !serviceRole) {
 const args = process.argv.slice(2)
 const email = args.find((a) => a.startsWith('--email='))?.split('=')[1]
 const userId = args.find((a) => a.startsWith('--user-id='))?.split('=')[1]
+const password = args.find((a) => a.startsWith('--password='))?.split('=')[1]
 
 if (!email || !userId) {
-  console.error('Usage: npm run set-admin-user-id -- --email=admin@namma-avadi.in --user-id=admin')
+  console.error('Usage: npm run set-admin-user-id -- --email=admin@namma-avadi.in --user-id=admin [--password=secret]')
   process.exit(1)
 }
 
@@ -62,13 +64,15 @@ if (!user) {
   process.exit(1)
 }
 
-const { data, error } = await supabase.auth.admin.updateUserById(user.id, {
-  user_metadata: { role: 'admin', user_id: userId },
-})
+const updates = password
+  ? { password, user_metadata: { role: 'admin', user_id: userId } }
+  : { user_metadata: { role: 'admin', user_id: userId } }
+
+const { data, error } = await supabase.auth.admin.updateUserById(user.id, updates)
 
 if (error) {
   console.error('Failed to update user:', error.message)
   process.exit(1)
 }
 
-console.log(`User ID set: ${data.user.user_metadata.user_id} → ${data.user.email}`)
+console.log(`User ID set: ${data.user.user_metadata.user_id} → ${data.user.email}${password ? ' (password updated)' : ''}`)
