@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     template: "%s | Namma Avadi",
   },
   description:
-    "TVK member registration, tracking, and profile system for Avadi wards 1–7.",
+    "TVK member registration, tracking, and profile system for Thiruninravur, Avadi and Thiruverkadu.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

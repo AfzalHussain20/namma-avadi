@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { requireAdmin } from '@/lib/dal'
+import { getT } from '@/lib/i18n'
+import { getLang } from '@/lib/i18n-server'
 import { getMemberByMemberId, getMemberDocuments, getWards } from '@/lib/members/queries'
 import { getSignedUrls } from '@/lib/storage'
 import { formatDate } from '@/lib/utils'
@@ -17,6 +19,8 @@ export default async function MemberProfilePage({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
   await requireAdmin()
+  const lang = await getLang()
+  const t = getT(lang)
   const { memberId } = await params
   const sp = await searchParams
   const editing = Array.isArray(sp.edit) ? sp.edit[0] === '1' : sp.edit === '1'
@@ -49,15 +53,25 @@ export default async function MemberProfilePage({
             <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
               <span className="font-medium tabular-nums text-primary">{member.member_id}</span>
               <span>·</span>
-              <span>Ward {member.ward_number}</span>
+              <span>
+                {t('wardN')} {member.ward_number}
+              </span>
               <span>·</span>
-              <span>Registered {formatDate(member.created_at)}</span>
+              <span>
+                {t('registeredOn')} {formatDate(member.created_at)}
+              </span>
             </div>
           </div>
         </div>
       </div>
 
-      <MemberProfile member={member} documents={docsWithUrls} wards={wards} editingInitial={editing} />
+      <MemberProfile
+        member={member}
+        documents={docsWithUrls}
+        wards={wards}
+        editingInitial={editing}
+        lang={lang}
+      />
     </div>
   )
 }

@@ -1,17 +1,27 @@
 'use client'
 
 import { useState } from 'react'
+import { getT, type Lang } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 
-export default function RegistrationShare({ qrDataUrl, url }: { qrDataUrl: string; url: string }) {
+export default function RegistrationShare({
+  qrDataUrl,
+  url,
+  lang,
+}: {
+  qrDataUrl: string
+  url: string
+  lang: Lang
+}) {
+  const t = getT(lang)
   const [status, setStatus] = useState<'idle' | 'copied' | 'done'>('idle')
   const [busy, setBusy] = useState(false)
 
   async function invite() {
     setBusy(true)
     const data = {
-      title: 'Namma Avadi — TVK Member Registration',
-      text: 'Join Namma Avadi as a TVK member (Avadi, Wards 1–7). Register online in 2 minutes.',
+      title: `${t('appName')} — ${t('regTitle')}`,
+      text: t('shareBody'),
       url,
     }
     try {
@@ -52,15 +62,12 @@ export default function RegistrationShare({ qrDataUrl, url }: { qrDataUrl: strin
       <div className="flex flex-col items-center gap-6 md:flex-row md:items-center">
         <div className="shrink-0 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={qrDataUrl} alt="QR code for member registration" className="h-44 w-44 sm:h-52 sm:w-52" />
+          <img src={qrDataUrl} alt={t('qrAlt')} className="h-44 w-44 sm:h-52 sm:w-52" />
         </div>
 
         <div className="w-full min-w-0 text-center md:text-left">
-          <h2 className="text-lg font-semibold text-slate-900">Register Members</h2>
-          <p className="mt-1 text-sm text-slate-500">
-            Scan the QR to open the member registration form on any phone, or send the link directly
-            to members via WhatsApp, Messages, Email or any installed app.
-          </p>
+          <h2 className="text-lg font-semibold text-slate-900">{t('shareTitle')}</h2>
+          <p className="mt-1 text-sm text-slate-500">{t('shareBody')}</p>
 
           <div className="mx-auto mt-4 flex max-w-md items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 md:mx-0">
             <span className="min-w-0 flex-1 truncate text-xs text-slate-500 sm:text-sm">{url}</span>
@@ -68,9 +75,9 @@ export default function RegistrationShare({ qrDataUrl, url }: { qrDataUrl: strin
               type="button"
               onClick={copyLink}
               className="btn btn-ghost btn-sm shrink-0"
-              aria-label="Copy registration link"
+              aria-label={t('copyLinkAria')}
             >
-              Copy
+              {t('copy')}
             </button>
           </div>
 
@@ -84,7 +91,7 @@ export default function RegistrationShare({ qrDataUrl, url }: { qrDataUrl: strin
               <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m-4-4l4 4 4-4M4 20h16" />
               </svg>
-              {busy ? 'Opening…' : 'Invite'}
+              {busy ? t('opening') : t('invite')}
             </button>
           </div>
 
@@ -95,8 +102,8 @@ export default function RegistrationShare({ qrDataUrl, url }: { qrDataUrl: strin
             )}
             aria-live="polite"
           >
-            {status === 'copied' && <span className="text-emerald-600">Registration link copied.</span>}
-            {status === 'done' && <span className="text-emerald-600">Registration link shared.</span>}
+            {status === 'copied' && <span className="text-emerald-600">{t('linkCopied')}</span>}
+            {status === 'done' && <span className="text-emerald-600">{t('linkShared')}</span>}
           </p>
         </div>
       </div>

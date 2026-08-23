@@ -1,11 +1,3 @@
-export const WARD_COUNT = 7
-
-export const STATUS_LABELS: Record<string, string> = {
-  ACTIVE: 'Active',
-  INACTIVE: 'Inactive',
-  PENDING_VERIFICATION: 'Pending Verification',
-}
-
 export const STATUS_BADGES: Record<string, string> = {
   ACTIVE: 'badge-green',
   INACTIVE: 'badge-slate',

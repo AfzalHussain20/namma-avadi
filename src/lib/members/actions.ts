@@ -70,7 +70,13 @@ export async function createMember(input: RegisterInput): Promise<RegisterResult
     address: input.form.address.trim(),
     aadhaar_number: input.form.aadhaar_number.replace(/\s/g, ''),
     voter_id: input.form.voter_id.trim().toUpperCase() || null,
+    place: input.form.place,
     ward_number: input.form.ward_number,
+    religion: input.form.religion,
+    community: input.form.community.trim(),
+    caste_category: input.form.caste_category,
+    occupation: input.form.occupation.trim(),
+    blood_group: input.form.blood_group,
   }
 
   // Re-check duplicates — never silently create duplicates.
@@ -95,6 +101,12 @@ export async function createMember(input: RegisterInput): Promise<RegisterResult
     p_address: form.address,
     p_date_of_birth: form.date_of_birth,
     p_email: form.email,
+    p_place: form.place,
+    p_religion: form.religion,
+    p_community: form.community,
+    p_caste_category: form.caste_category,
+    p_occupation: form.occupation,
+    p_blood_group: form.blood_group,
   })
 
   if (error || !memberRows || memberRows.length === 0) {
@@ -165,7 +177,13 @@ export async function updateMember(
       address: form.address.trim(),
       aadhaar_number: form.aadhaar_number.replace(/\s/g, ''),
       voter_id: form.voter_id.trim().toUpperCase() || null,
+      place: form.place,
       ward_number: form.ward_number,
+      religion: form.religion,
+      community: form.community,
+      caste_category: form.caste_category,
+      occupation: form.occupation,
+      blood_group: form.blood_group,
     })
     .eq('member_id', memberId)
     .select('id')

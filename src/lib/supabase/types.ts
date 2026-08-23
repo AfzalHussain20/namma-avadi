@@ -17,6 +17,7 @@ export interface Database {
           id: number
           ward_number: number
           name: string
+          place: string
           active: boolean
           created_at: string
         }
@@ -24,6 +25,7 @@ export interface Database {
           id?: number
           ward_number: number
           name: string
+          place?: string
           active?: boolean
           created_at?: string
         }
@@ -31,6 +33,7 @@ export interface Database {
           id?: number
           ward_number?: number
           name?: string
+          place?: string
           active?: boolean
           created_at?: string
         }
@@ -49,6 +52,12 @@ export interface Database {
           address: string
           date_of_birth: string
           email: string | null
+          place: string
+          religion: string
+          community: string
+          caste_category: string
+          occupation: string
+          blood_group: string
           status: MemberStatus
           created_at: string
           updated_at: string
@@ -65,6 +74,12 @@ export interface Database {
           address: string
           date_of_birth: string
           email?: string | null
+          place?: string
+          religion?: string
+          community?: string
+          caste_category?: string
+          occupation?: string
+          blood_group?: string
           status?: MemberStatus
           created_at?: string
           updated_at?: string
@@ -81,17 +96,23 @@ export interface Database {
           address?: string
           date_of_birth?: string
           email?: string | null
+          place?: string
+          religion?: string
+          community?: string
+          caste_category?: string
+          occupation?: string
+          blood_group?: string
           status?: MemberStatus
           created_at?: string
           updated_at?: string
         }
         Relationships: [
           {
-            foreignKeyName: 'members_ward_number_fkey'
-            columns: ['ward_number']
+            foreignKeyName: 'members_place_ward_fkey'
+            columns: ['place', 'ward_number']
             isOneToOne: false
             referencedRelation: 'wards'
-            referencedColumns: ['ward_number']
+            referencedColumns: ['place', 'ward_number']
           },
         ]
       }
@@ -144,6 +165,7 @@ export interface Database {
       get_dashboard_stats: {
         Args: Record<string, never>
         Returns: {
+          place: string
           ward_number: number
           ward_name: string
           member_count: number
@@ -153,7 +175,7 @@ export interface Database {
         }[]
       }
       get_member_count_by_ward: {
-        Args: { p_ward: number }
+        Args: { p_place: string; p_ward: number }
         Returns: number
       }
       find_member_duplicates: {
@@ -178,6 +200,12 @@ export interface Database {
           p_address: string
           p_date_of_birth: string
           p_email: string | null
+          p_place: string
+          p_religion: string
+          p_community: string
+          p_caste_category: string
+          p_occupation: string
+          p_blood_group: string
         }
         Returns: { member_id: string }[]
       }

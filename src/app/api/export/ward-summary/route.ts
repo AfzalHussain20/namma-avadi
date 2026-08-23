@@ -21,10 +21,10 @@ export async function GET(request: NextRequest) {
   }
 
   const total = data.reduce((s, r) => s + r.member_count, 0)
-  const headers = ['Ward', 'Total Members']
+  const headers = ['Place', 'Ward', 'Total Members']
   const rows = [
-    ...data.map((r) => [r.ward_name, r.member_count]),
-    ['Total', total],
+    ...data.map((r) => [r.place, `Ward ${r.ward_number}`, r.member_count]),
+    ['', 'Total', total],
   ]
 
   const date = new Date().toISOString().slice(0, 10)

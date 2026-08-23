@@ -2,15 +2,17 @@
 
 import { useActionState } from 'react'
 import { signIn } from '@/lib/auth/actions'
+import { getT, type Lang } from '@/lib/i18n'
 
-export default function LoginForm() {
+export default function LoginForm({ lang }: { lang: Lang }) {
+  const t = getT(lang)
   const [state, action, pending] = useActionState(signIn, undefined)
 
   return (
     <form action={action} className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-lg shadow-slate-200/50">
       <div>
         <label htmlFor="user_id" className="label">
-          User ID
+          {t('userId')}
         </label>
         <input
           id="user_id"
@@ -19,12 +21,12 @@ export default function LoginForm() {
           required
           autoFocus
           className="input"
-          placeholder="Enter your user ID"
+          placeholder={t('phUserId')}
         />
       </div>
       <div>
         <label htmlFor="password" className="label">
-          Password
+          {t('password')}
         </label>
         <input
           id="password"
@@ -44,7 +46,7 @@ export default function LoginForm() {
       )}
 
       <button type="submit" disabled={pending} className="btn btn-primary w-full">
-        {pending ? 'Signing in…' : 'Sign in'}
+        {pending ? t('signingIn') : t('signIn')}
       </button>
     </form>
   )

@@ -14,6 +14,7 @@ function escapeLike(value: string): string {
 
 export interface MemberListParams {
   q?: string
+  place?: string | null
   ward?: number | null
   status?: string | null
   from?: string | null
@@ -50,6 +51,7 @@ export async function listMembers(params: MemberListParams): Promise<MemberListR
       ].join(',')
     )
   }
+  if (params.place) query = query.eq('place', params.place)
   if (params.ward) query = query.eq('ward_number', params.ward)
   if (params.status) query = query.eq('status', params.status as MemberStatus)
   if (params.from) query = query.gte('created_at', params.from)
@@ -77,11 +79,17 @@ export async function listAllMembers(params: Omit<MemberListParams, 'page' | 'pe
     full_name: string
     father_name: string
     mobile: string
+    place: string
     ward_number: number
     address: string
     date_of_birth: string
     email: string | null
     voter_id: string | null
+    religion: string
+    community: string
+    caste_category: string
+    occupation: string
+    blood_group: string
     created_at: string
   }[]
 > {
@@ -90,7 +98,7 @@ export async function listAllMembers(params: Omit<MemberListParams, 'page' | 'pe
   let query = supabase
     .from('members')
     .select(
-      'member_id, full_name, father_name, mobile, ward_number, address, date_of_birth, email, voter_id, created_at'
+      'member_id, full_name, father_name, mobile, place, ward_number, address, date_of_birth, email, voter_id, religion, community, caste_category, occupation, blood_group, created_at'
     )
 
   if (params.q && params.q.trim()) {
@@ -105,6 +113,7 @@ export async function listAllMembers(params: Omit<MemberListParams, 'page' | 'pe
       ].join(',')
     )
   }
+  if (params.place) query = query.eq('place', params.place)
   if (params.ward) query = query.eq('ward_number', params.ward)
   if (params.status) query = query.eq('status', params.status as MemberStatus)
   if (params.from) query = query.gte('created_at', params.from)
@@ -178,6 +187,7 @@ export async function getWards(): Promise<WardRow[]> {
     .from('wards')
     .select('*')
     .eq('active', true)
+    .order('place', { ascending: true })
     .order('ward_number', { ascending: true })
   if (error || !data) return []
   return data as WardRow[]

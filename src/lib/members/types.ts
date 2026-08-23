@@ -9,7 +9,13 @@ export interface MemberFormInput {
   address: string
   aadhaar_number: string
   voter_id: string
+  place: string
   ward_number: number
+  religion: string
+  community: string
+  caste_category: string
+  occupation: string
+  blood_group: string
 }
 
 export interface MemberDocInput {

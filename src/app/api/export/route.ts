@@ -14,12 +14,13 @@ export async function GET(request: NextRequest) {
   const sp = request.nextUrl.searchParams
   const format = sp.get('format') === 'xls' ? 'xls' : 'csv'
   const q = sp.get('q') || ''
+  const place = sp.get('place') || null
   const ward = sp.get('ward') ? parseInt(sp.get('ward')!, 10) : null
   const status = sp.get('status') || null
   const from = sp.get('from') || null
   const to = sp.get('to') || null
 
-  const members = await listAllMembers({ q, ward, status, from, to })
+  const members = await listAllMembers({ q, place, ward, status, from, to })
   const rows = members.map(buildMemberExportRow)
 
   const date = new Date().toISOString().slice(0, 10)

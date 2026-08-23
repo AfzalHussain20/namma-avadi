@@ -2,9 +2,11 @@
 
 import { useState } from 'react'
 import { changePassword } from '@/lib/auth/actions'
+import { getT, type Lang } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 
-export default function ChangePasswordForm() {
+export default function ChangePasswordForm({ lang }: { lang: Lang }) {
+  const t = getT(lang)
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
   const [error, setError] = useState('')
@@ -14,11 +16,11 @@ export default function ChangePasswordForm() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (password.length < 8) {
-      setError('Password must be at least 8 characters.')
+      setError(t('pwdMinError'))
       return
     }
     if (password !== confirm) {
-      setError('Passwords do not match.')
+      setError(t('pwdMismatch'))
       return
     }
     setBusy(true)
@@ -39,14 +41,14 @@ export default function ChangePasswordForm() {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <label htmlFor="pwd" className="label">
-          New Password *
+          {t('newPassword')}
         </label>
         <input
           id="pwd"
           name="password"
           type="password"
           className={cn('input', error && 'border-danger focus:border-danger')}
-          placeholder="At least 8 characters"
+          placeholder={t('phNewPassword')}
           value={password}
           onChange={(e) => {
             setPassword(e.target.value)
@@ -58,14 +60,14 @@ export default function ChangePasswordForm() {
       </div>
       <div>
         <label htmlFor="pwd-confirm" className="label">
-          Confirm Password *
+          {t('confirmPassword')}
         </label>
         <input
           id="pwd-confirm"
           name="confirm"
           type="password"
           className={cn('input', error && 'border-danger focus:border-danger')}
-          placeholder="Repeat new password"
+          placeholder={t('phConfirmPassword')}
           value={confirm}
           onChange={(e) => {
             setConfirm(e.target.value)
@@ -77,10 +79,10 @@ export default function ChangePasswordForm() {
       </div>
 
       {error && <p className="text-sm text-danger">{error}</p>}
-      {success && <p className="text-sm text-success">Password updated successfully.</p>}
+      {success && <p className="text-sm text-success">{t('passwordUpdated')}</p>}
 
       <button type="submit" className="btn btn-primary" disabled={busy}>
-        {busy ? 'Updating…' : 'Update Password'}
+        {busy ? t('updating') : t('updatePassword')}
       </button>
     </form>
   )

@@ -1,26 +1,52 @@
+import { CASTE_CATEGORIES, PLACES, RELIGIONS } from '@/lib/constants'
+
 export const EXPORT_COLUMNS = [
   'Member ID',
   'Full Name',
   "Father's Name",
   'Mobile',
+  'Place',
   'Ward',
   'Address',
   'Date of Birth',
   'Email',
   'Voter ID',
+  'Religion',
+  'Community',
+  'Caste Category',
+  'Occupation',
+  'Blood Group',
   'Created Date',
 ]
+
+function placeLabel(value: string): string {
+  return PLACES.find((p) => p.value === value)?.en ?? value
+}
+
+function religionLabel(value: string): string {
+  return RELIGIONS.find((r) => r.value === value)?.en ?? value
+}
+
+function casteCategoryLabel(value: string): string {
+  return CASTE_CATEGORIES.find((c) => c.value === value)?.en ?? value
+}
 
 export function buildMemberExportRow(m: {
   member_id: string
   full_name: string
   father_name: string
   mobile: string
+  place: string
   ward_number: number
   address: string
   date_of_birth: string
   email: string | null
   voter_id: string | null
+  religion: string
+  community: string
+  caste_category: string
+  occupation: string
+  blood_group: string
   created_at: string
 }): (string | number)[] {
   return [
@@ -28,11 +54,17 @@ export function buildMemberExportRow(m: {
     m.full_name,
     m.father_name,
     m.mobile,
+    placeLabel(m.place),
     m.ward_number,
     m.address,
     m.date_of_birth,
     m.email ?? '',
     m.voter_id ?? '',
+    religionLabel(m.religion),
+    m.community,
+    casteCategoryLabel(m.caste_category),
+    m.occupation,
+    m.blood_group,
     new Date(m.created_at).toLocaleDateString('en-IN'),
   ]
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { getWards } from '@/lib/members/queries'
+import { getT } from '@/lib/i18n'
+import { getLang } from '@/lib/i18n-server'
 import RegistrationForm from './registration-form'
 
 export const metadata: Metadata = {
@@ -9,7 +10,8 @@ export const metadata: Metadata = {
 export const dynamic = 'force-dynamic'
 
 export default async function RegisterPage() {
-  const wards = await getWards()
+  const lang = await getLang()
+  const t = getT(lang)
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -20,23 +22,21 @@ export default async function RegisterPage() {
               NA
             </div>
             <div>
-              <p className="text-sm font-semibold leading-tight">Namma Avadi</p>
-              <p className="text-xs text-muted-foreground">TVK Member System</p>
+              <p className="text-sm font-semibold leading-tight">{t('appName')}</p>
+              <p className="text-xs text-muted-foreground">{t('tagline')}</p>
             </div>
           </div>
           <Link href="/" className="btn btn-ghost btn-sm">
-            Home
+            {t('home')}
           </Link>
         </div>
       </header>
 
       <main className="mx-auto w-full max-w-3xl px-4 py-8 sm:px-6 sm:py-12">
-        <RegistrationForm wards={wards} />
+        <RegistrationForm lang={lang} />
       </main>
 
-      <footer className="pb-8 text-center text-xs text-muted-foreground">
-        Authorized personnel only · Namma Avadi — TVK Member System
-      </footer>
+      <footer className="pb-8 text-center text-xs text-muted-foreground">{t('footerReg')}</footer>
     </div>
   )
 }
