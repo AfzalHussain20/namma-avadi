@@ -7,7 +7,7 @@ export type Json =
   | Json[]
 
 export type MemberStatus = 'ACTIVE' | 'INACTIVE' | 'PENDING_VERIFICATION'
-export type DocumentType = 'AADHAAR' | 'VOTER_ID' | 'TVK_ID' | 'PHOTO'
+export type DocumentType = 'AADHAAR' | 'AADHAAR_BACK' | 'VOTER_ID' | 'TVK_ID' | 'PHOTO'
 
 export interface Database {
   public: {

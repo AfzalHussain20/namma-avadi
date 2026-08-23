@@ -23,7 +23,16 @@ import { cn, isValidAadhaar, isValidEmail, isValidMobile, isValidVoterId, isFutu
 import { createClient } from '@/lib/supabase/client'
 import type { DocumentType } from '@/lib/supabase/types'
 
-const DOC_ORDER: DocumentType[] = ['AADHAAR', 'VOTER_ID', 'TVK_ID', 'PHOTO']
+const DOC_ORDER: DocumentType[] = ['AADHAAR', 'AADHAAR_BACK', 'VOTER_ID', 'TVK_ID', 'PHOTO']
+
+/** i18n key per document slot. */
+const DOC_LABEL_KEYS: Record<DocumentType, DictKey> = {
+  AADHAAR: 'aadhaarDoc',
+  AADHAAR_BACK: 'aadhaarBackDoc',
+  VOTER_ID: 'voterIdDoc',
+  TVK_ID: 'tvkIdDoc',
+  PHOTO: 'photoDoc',
+}
 
 /** DOM order of form fields — used to jump to the first missing field on submit. */
 const FIELD_ORDER = [
@@ -562,8 +571,7 @@ export default function RegistrationForm({ lang }: { lang: Lang }) {
             {DOC_ORDER.map((type) => {
               const file = files[type]
               const pct = progress[type]
-              const docLabel =
-                type === 'AADHAAR' ? t('aadhaarDoc') : type === 'VOTER_ID' ? t('voterIdDoc') : type === 'TVK_ID' ? t('tvkIdDoc') : t('photoDoc')
+              const docLabel = t(DOC_LABEL_KEYS[type])
               return (
                 <div key={type} className="rounded-xl border p-4">
                   <p className="text-sm font-medium">{docLabel}</p>

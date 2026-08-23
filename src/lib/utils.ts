@@ -5,7 +5,8 @@ export const STATUS_BADGES: Record<string, string> = {
 }
 
 export const DOC_LABELS: Record<string, string> = {
-  AADHAAR: 'Aadhaar',
+  AADHAAR: 'Aadhaar — Front Side',
+  AADHAAR_BACK: 'Aadhaar — Back Side',
   VOTER_ID: 'Voter ID',
   TVK_ID: 'TVK ID',
   PHOTO: 'Photo',

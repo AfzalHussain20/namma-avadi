@@ -94,11 +94,13 @@ export function label(
 
 /** Official TVK brand assets under /public/assets/tvk/.
  *  flag: official party flag artwork (tvkvijay.com asset server)
- *  vijay / ramesh: official candidate photographs (tvkassets.minsky.studio) */
+ *  vijay / ramesh: official candidate photographs (tvkassets.minsky.studio)
+ *  Bump TVK_ASSET_VERSION whenever a file is replaced — it busts browser cache. */
+export const TVK_ASSET_VERSION = 'v2'
 export const TVK_ASSETS = {
-  flag: '/assets/tvk/tvk-flag.png',
-  vijay: '/assets/tvk/vijay.jpg',
-  ramesh: '/assets/tvk/ramesh-kumar.jpg',
+  flag: `/assets/tvk/tvk-flag.png?v=${TVK_ASSET_VERSION}`,
+  vijay: `/assets/tvk/vijay.jpg?v=${TVK_ASSET_VERSION}`,
+  ramesh: `/assets/tvk/ramesh-kumar.jpg?v=${TVK_ASSET_VERSION}`,
 } as const
 
 /** Official TVK web destinations. */

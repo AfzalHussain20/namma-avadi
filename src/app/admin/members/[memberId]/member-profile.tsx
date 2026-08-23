@@ -30,7 +30,15 @@ import type { DocumentType } from '@/lib/supabase/types'
 
 type DocWithUrl = DocumentRow & { signedUrl: string | null }
 
-const DOC_TYPES: DocumentType[] = ['AADHAAR', 'VOTER_ID', 'TVK_ID', 'PHOTO']
+const DOC_TYPES: DocumentType[] = ['AADHAAR', 'AADHAAR_BACK', 'VOTER_ID', 'TVK_ID', 'PHOTO']
+
+const DOC_LABEL_KEYS: Record<DocumentType, DictKey> = {
+  AADHAAR: 'aadhaarDoc',
+  AADHAAR_BACK: 'aadhaarBackDoc',
+  VOTER_ID: 'voterIdDoc',
+  TVK_ID: 'tvkIdDoc',
+  PHOTO: 'photoDoc',
+}
 
 function SectionCard({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -294,14 +302,7 @@ export default function MemberProfile({
 
   if (!editing) {
     const tvkIdDoc = documents.find((d) => d.document_type === 'TVK_ID')
-    const docLabelOf = (type: DocumentType): string =>
-      type === 'AADHAAR'
-        ? t('aadhaarDoc')
-        : type === 'VOTER_ID'
-          ? t('voterIdDoc')
-          : type === 'TVK_ID'
-            ? t('tvkIdDoc')
-            : t('photoDoc')
+    const docLabelOf = (type: DocumentType): string => t(DOC_LABEL_KEYS[type])
 
     return (
       <div className="space-y-6">
@@ -580,15 +581,7 @@ export default function MemberProfile({
               .map((doc) => (
                 <li key={doc.id} className="flex items-center justify-between gap-3 rounded-lg border px-3 py-2.5">
                   <div className="min-w-0">
-                    <p className="truncate text-sm font-medium">
-                      {doc.document_type === 'AADHAAR'
-                        ? t('aadhaarDoc')
-                        : doc.document_type === 'VOTER_ID'
-                          ? t('voterIdDoc')
-                          : doc.document_type === 'TVK_ID'
-                            ? t('tvkIdDoc')
-                            : t('photoDoc')}
-                    </p>
+                    <p className="truncate text-sm font-medium">{t(DOC_LABEL_KEYS[doc.document_type])}</p>
                     <p className="truncate text-xs text-muted-foreground">{doc.file_name} · {formatBytes(doc.file_size)}</p>
                   </div>
                   <div className="flex shrink-0 gap-2">
@@ -612,8 +605,7 @@ export default function MemberProfile({
           {DOC_TYPES.map((type) => {
             const file = newFiles[type]
             const pct = progress[type]
-            const label =
-              type === 'AADHAAR' ? t('aadhaarDoc') : type === 'VOTER_ID' ? t('voterIdDoc') : type === 'TVK_ID' ? t('tvkIdDoc') : t('photoDoc')
+            const label = t(DOC_LABEL_KEYS[type])
             return (
               <div key={type} className="rounded-xl border p-4">
                 <p className="text-sm font-medium">{label}</p>

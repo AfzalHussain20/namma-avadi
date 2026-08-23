@@ -52,6 +52,7 @@ export function documentFilePath(memberUuid: string, docType: string, fileName: 
 
 export const DOC_TYPE_ACCEPTS: Record<string, string> = {
   AADHAAR: '.jpg,.jpeg,.png,.pdf',
+  AADHAAR_BACK: '.jpg,.jpeg,.png,.pdf',
   VOTER_ID: '.jpg,.jpeg,.png,.pdf',
   TVK_ID: '.jpg,.jpeg,.png,.pdf',
   PHOTO: '.jpg,.jpeg,.png',
@@ -59,6 +60,7 @@ export const DOC_TYPE_ACCEPTS: Record<string, string> = {
 
 export const DOC_TYPE_MAX_BYTES: Record<string, number> = {
   AADHAAR: 5 * 1024 * 1024,
+  AADHAAR_BACK: 5 * 1024 * 1024,
   VOTER_ID: 5 * 1024 * 1024,
   TVK_ID: 5 * 1024 * 1024,
   PHOTO: 5 * 1024 * 1024,

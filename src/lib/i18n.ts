@@ -82,7 +82,8 @@ const dict = {
   registeredOn: { en: 'Registered', ta: 'பதிவு தேதி' },
   tvkIdDoc: { en: 'TVK ID', ta: 'TVK அட்டை' },
   photoDoc: { en: 'Photo', ta: 'புகைப்படம்' },
-  aadhaarDoc: { en: 'Aadhaar', ta: 'ஆதார்' },
+  aadhaarDoc: { en: 'Aadhaar — Front Side', ta: 'ஆதார் — முன்புறம்' },
+  aadhaarBackDoc: { en: 'Aadhaar — Back Side', ta: 'ஆதார் — பின்புறம்' },
   voterIdDoc: { en: 'Voter ID', ta: 'வாக்காளர் அட்டை' },
 
   selectPlace: { en: 'Select place…', ta: 'இடத்தைத் தேர்ந்தெடுங்கள்…' },
