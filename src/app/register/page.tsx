@@ -48,7 +48,7 @@ export default async function RegisterPage() {
           <div className="grid items-center gap-6 lg:grid-cols-[auto_1fr_auto]">
             <div className="hidden lg:block">
               <LeaderPortrait
-                width="w-[150px]"
+                size="sm"
                 src={TVK_ASSETS.ramesh}
                 alt={t('leaderRameshAlt')}
                 name={t('leaderRameshName')}
@@ -76,7 +76,7 @@ export default async function RegisterPage() {
             </div>
             <div className="hidden lg:block">
               <LeaderPortrait
-                width="w-[150px]"
+                size="sm"
                 src={TVK_ASSETS.vijay}
                 alt={t('leaderVijayAlt')}
                 name={t('leaderVijayName')}
