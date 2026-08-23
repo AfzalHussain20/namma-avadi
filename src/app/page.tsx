@@ -28,9 +28,6 @@ export default async function Home() {
       <p className="mt-1.5 text-sm font-semibold text-foreground sm:text-base lg:whitespace-nowrap">
         Tamilaga Vettri Kazhagam
       </p>
-      <p className="mt-3 inline-flex items-center rounded-full bg-tvk-yellow-soft px-4 py-1 text-xs font-bold uppercase tracking-wide text-tvk-dark-red">
-        {t('portalTitle')}
-      </p>
       <h1 className="mt-6 max-w-md text-xl font-bold tracking-tight text-foreground sm:text-2xl">
         {t('homeTitle')}
       </h1>

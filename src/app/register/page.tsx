@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import LangToggle from '@/components/lang-toggle'
 import LeaderPortrait from '@/components/leader-portrait'
 import SmartImage from '@/components/smart-image'
 import { TVK_ASSETS, TVK_LINKS } from '@/lib/constants'
@@ -74,9 +73,6 @@ export default async function RegisterPage() {
               <p className="mt-1 text-xs font-semibold text-foreground sm:text-sm lg:whitespace-nowrap">
                 Tamilaga Vettri Kazhagam
               </p>
-              <p className="mt-2 inline-flex items-center rounded-full bg-tvk-yellow-soft px-3 py-0.5 text-[11px] font-bold uppercase tracking-wide text-tvk-dark-red">
-                {t('portalTitle')}
-              </p>
             </div>
             <div className="hidden lg:block">
               <LeaderPortrait
@@ -112,13 +108,6 @@ export default async function RegisterPage() {
             />
           </div>
         </section>
-
-        {/* Language switcher + registration heading */}
-        <div className="mb-6 flex flex-col items-center gap-3 text-center">
-          <LangToggle lang={lang} />
-          <h1 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">{t('regTitle')}</h1>
-          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{t('homeBadge')}</p>
-        </div>
 
         <RegistrationForm lang={lang} />
       </main>
