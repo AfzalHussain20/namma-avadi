@@ -4,8 +4,10 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { signOut } from '@/lib/auth/actions'
+import { TVK_ASSETS } from '@/lib/constants'
 import { getT, type DictKey, type Lang } from '@/lib/i18n'
 import LangToggle from '@/components/lang-toggle'
+import SmartImage from '@/components/smart-image'
 import { cn } from '@/lib/utils'
 
 const iconCls = 'h-5 w-5 shrink-0'
@@ -63,9 +65,14 @@ const links: { href: string; labelKey: DictKey; icon: React.ReactNode }[] = [
 function Brand({ compact, t }: { compact?: boolean; t: (key: DictKey) => string }) {
   return (
     <div className="flex items-center gap-3">
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 text-sm font-bold text-white shadow-sm shadow-indigo-200">
-        NA
-      </div>
+      <SmartImage
+        src={TVK_ASSETS.logo}
+        alt="TVK"
+        label="TVK"
+        aspect="aspect-square"
+        contain
+        className="h-10 w-10 shrink-0 rounded-xl shadow-sm shadow-red-900/20"
+      />
       {!compact && (
         <div>
           <p className="text-sm font-bold leading-tight text-slate-900">{t('appName')}</p>
@@ -154,6 +161,7 @@ export default function AdminNav({ lang }: { lang: Lang }) {
           aria-modal="true"
           aria-label={t('openMenu')}
         >
+          <div className="brand-bar shrink-0" />
           <div className="flex items-center justify-between border-b border-slate-100 px-4 py-4">
             <Brand t={t} />
             <button
@@ -188,6 +196,7 @@ export default function AdminNav({ lang }: { lang: Lang }) {
 
       {/* Desktop sidebar */}
       <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col border-r border-slate-200 bg-white lg:flex">
+        <div className="brand-bar shrink-0" />
         <div className="border-b border-slate-100 px-5 py-4">
           <Link href="/admin">
             <Brand t={t} />

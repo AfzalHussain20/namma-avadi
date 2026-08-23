@@ -87,8 +87,8 @@ export default async function MembersPage({
 
         {members.length === 0 ? (
           <div className="flex flex-col items-center justify-center px-6 py-16 text-center">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-indigo-50">
-              <svg className="h-7 w-7 text-indigo-400" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-tvk-yellow-soft">
+              <svg className="h-7 w-7 text-tvk-dark-red" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
               </svg>
             </div>
@@ -117,7 +117,7 @@ export default async function MembersPage({
                       <tr key={m.id} className="border-b border-slate-100 last:border-0 hover:bg-slate-50/60">
                         <td className="td">
                           <div className="flex items-center gap-3">
-                            <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-indigo-100 to-violet-100 text-sm font-bold text-indigo-700">
+                            <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-tvk-yellow-soft to-tvk-yellow text-sm font-bold text-tvk-dark-red">
                               {photo ? (
                                 // eslint-disable-next-line @next/next/no-img-element
                                 <img src={photo} alt="" className="h-full w-full object-cover" />
@@ -125,7 +125,7 @@ export default async function MembersPage({
                                 <span>{m.full_name.charAt(0)}</span>
                               )}
                             </div>
-                            <span className="font-semibold tabular-nums text-indigo-600">
+                            <span className="font-semibold tabular-nums text-tvk-red">
                               {m.member_id}
                             </span>
                           </div>
@@ -165,7 +165,7 @@ export default async function MembersPage({
                 return (
                   <li key={m.id} className="p-4">
                     <div className="flex items-start gap-3">
-                      <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-indigo-100 to-violet-100 text-base font-bold text-indigo-700">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-tvk-yellow-soft to-tvk-yellow text-base font-bold text-tvk-dark-red">
                         {photo ? (
                           // eslint-disable-next-line @next/next/no-img-element
                           <img src={photo} alt="" className="h-full w-full object-cover" />
@@ -175,7 +175,7 @@ export default async function MembersPage({
                       </div>
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center justify-between gap-2">
-                          <span className="font-semibold tabular-nums text-indigo-600">{m.member_id}</span>
+                          <span className="font-semibold tabular-nums text-tvk-red">{m.member_id}</span>
                           <span className="badge badge-blue">
                             {placeLabel(m.place)} · {t('wardN')} {m.ward_number}
                           </span>

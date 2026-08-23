@@ -209,7 +209,7 @@ export default function MemberFilters({ wards, lang }: { wards: WardRow[]; lang:
             className={cn(
               'rounded-full px-3 py-1 text-xs font-semibold transition-colors',
               activeRange === r.key
-                ? 'bg-indigo-600 text-white shadow-sm'
+                ? 'bg-tvk-red text-white shadow-sm'
                 : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
             )}
           >

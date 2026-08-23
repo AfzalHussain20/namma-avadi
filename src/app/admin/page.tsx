@@ -57,19 +57,19 @@ export default async function DashboardPage() {
       </div>
 
       {/* Hero */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-600 via-indigo-600 to-violet-600 p-6 text-white shadow-lg shadow-indigo-200/60 sm:p-8">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-tvk-red via-tvk-dark-red to-tvk-dark-red p-6 text-white shadow-lg shadow-red-900/30 sm:p-8">
         <div className="pointer-events-none absolute -right-10 -top-10 h-48 w-48 rounded-full bg-white/10" />
         <div className="pointer-events-none absolute -bottom-16 right-24 h-40 w-40 rounded-full bg-white/10" />
         <div className="relative">
-          <p className="text-sm font-medium text-indigo-100">{t('totalMembersLabel')}</p>
+          <p className="text-sm font-medium text-tvk-yellow-soft">{t('totalMembersLabel')}</p>
           <p className="mt-1 text-5xl font-bold tabular-nums tracking-tight sm:text-6xl">
             {total.toLocaleString('en-IN')}
           </p>
-          <p className="mt-3 text-sm text-indigo-100">{t('heroSubline')}</p>
+          <p className="mt-3 text-sm text-tvk-yellow-soft">{t('heroSubline')}</p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Link
               href="/admin/members"
-              className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-semibold text-indigo-700 shadow-sm transition-colors hover:bg-indigo-50"
+              className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-semibold text-tvk-dark-red shadow-sm transition-colors hover:bg-tvk-yellow-soft"
             >
               {t('viewAllMembers')}
             </Link>
@@ -90,7 +90,7 @@ export default async function DashboardPage() {
       <section>
         <div className="mb-3 flex items-center justify-between">
           <h2 className="text-lg font-semibold text-slate-900">{t('membersByWard')}</h2>
-          <Link href="/admin/wards" className="text-sm font-semibold text-indigo-600 hover:text-indigo-700">
+          <Link href="/admin/wards" className="text-sm font-semibold text-tvk-red hover:text-tvk-dark-red">
             {t('viewAll')} →
           </Link>
         </div>
@@ -99,7 +99,7 @@ export default async function DashboardPage() {
             <Link
               key={`${row.place}-${row.ward_number}`}
               href={`/admin/members?place=${row.place}&ward=${row.ward_number}`}
-              className="card group p-5 transition-all hover:-translate-y-0.5 hover:border-indigo-200 hover:shadow-md"
+              className="card group p-5 transition-all hover:-translate-y-0.5 hover:border-tvk-yellow hover:shadow-md"
             >
               <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                 {lang === 'ta'
@@ -107,7 +107,7 @@ export default async function DashboardPage() {
                   : `Ward ${row.ward_number}`}
                 <span className="ml-1 font-normal normal-case text-slate-400">· {row.ward_name}</span>
               </p>
-              <p className="mt-2 text-3xl font-bold tabular-nums text-slate-900 group-hover:text-indigo-600">
+              <p className="mt-2 text-3xl font-bold tabular-nums text-slate-900 group-hover:text-tvk-red">
                 {row.member_count.toLocaleString('en-IN')}
               </p>
               <p className="mt-1 text-xs text-slate-400">{t('membersUnit')}</p>
@@ -120,7 +120,7 @@ export default async function DashboardPage() {
       <section>
         <div className="mb-3 flex items-center justify-between">
           <h2 className="text-lg font-semibold text-slate-900">{t('recentRegistrations')}</h2>
-          <Link href="/admin/members" className="text-sm font-semibold text-indigo-600 hover:text-indigo-700">
+          <Link href="/admin/members" className="text-sm font-semibold text-tvk-red hover:text-tvk-dark-red">
             {t('viewAll')} →
           </Link>
         </div>
@@ -140,7 +140,7 @@ export default async function DashboardPage() {
                       href={`/admin/members/${m.member_id}`}
                       className="flex items-center gap-3 px-4 py-3 transition-colors hover:bg-slate-50 sm:px-5"
                     >
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-indigo-100 to-violet-100 text-sm font-bold text-indigo-700">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-tvk-yellow-soft to-tvk-yellow text-sm font-bold text-tvk-dark-red">
                         {photo ? (
                           // eslint-disable-next-line @next/next/no-img-element
                           <img src={photo} alt="" className="h-full w-full object-cover" />
@@ -155,7 +155,7 @@ export default async function DashboardPage() {
                         </p>
                       </div>
                       <div className="hidden text-right sm:block">
-                        <p className="text-sm font-semibold tabular-nums text-indigo-600">{m.member_id}</p>
+                        <p className="text-sm font-semibold tabular-nums text-tvk-red">{m.member_id}</p>
                         <p className="text-xs text-slate-400">{formatDate(m.created_at)}</p>
                       </div>
                     </Link>

@@ -62,12 +62,12 @@ export default async function WardsPage() {
               <Link
                 key={`${row.place}-${row.ward_number}`}
                 href={`/admin/members?place=${row.place}&ward=${row.ward_number}`}
-                className="card group p-5 transition-all hover:-translate-y-0.5 hover:border-indigo-200 hover:shadow-md"
+                className="card group p-5 transition-all hover:-translate-y-0.5 hover:border-tvk-yellow hover:shadow-md"
               >
                 <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                   {t('wardN')} {row.ward_number}
                 </p>
-                <p className="mt-2 text-3xl font-bold tabular-nums text-slate-900 group-hover:text-indigo-600">
+                <p className="mt-2 text-3xl font-bold tabular-nums text-slate-900 group-hover:text-tvk-red">
                   {row.member_count.toLocaleString('en-IN')}
                 </p>
                 <p className="mt-1 text-xs text-slate-400">{t('membersUnit')}</p>

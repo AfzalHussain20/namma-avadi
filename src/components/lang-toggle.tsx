@@ -31,7 +31,7 @@ export default function LangToggle({ lang, className }: { lang: Lang; className?
           aria-pressed={lang === l}
           className={cn(
             'rounded-full px-2.5 py-1 text-xs font-semibold transition-colors',
-            lang === l ? 'bg-indigo-600 text-white' : 'text-slate-600 hover:bg-slate-100'
+            lang === l ? 'bg-tvk-red text-white' : 'text-slate-600 hover:bg-slate-100'
           )}
         >
           {l === 'en' ? 'English' : 'தமிழ்'}

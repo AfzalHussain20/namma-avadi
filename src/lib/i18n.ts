@@ -12,6 +12,12 @@ const dict = {
   // ---- Brand / shell -------------------------------------------------------
   appName: { en: 'Namma Avadi', ta: 'நம்மா ஆவடி' },
   tagline: { en: 'TVK Member System', ta: 'TVK உறுப்பினர் அமைப்பு' },
+  partyName: { en: 'Tamilaga Vettri Kazhagam', ta: 'தமிழக வெற்றிக் கழகம்' },
+  portalTitle: { en: 'Ward Member Register', ta: 'வார்டு உறுப்பினர் பதிவேடு' },
+  leaderVijayName: { en: 'C. Joseph Vijay', ta: 'சி. ஜோசப் விஜய்' },
+  leaderVijayRole: { en: 'Party President', ta: 'கட்சி தலைவர்' },
+  leaderRameshName: { en: 'R. Ramesh Kumar', ta: 'ஆர். ரமேஷ் குமார்' },
+  leaderRameshRole: { en: 'MLA · Avadi · TVK', ta: 'எம்.எல்.ஏ. · ஆவடி · TVK' },
   home: { en: 'Home', ta: 'முகப்பு' },
   adminLogin: { en: 'Admin Login', ta: 'நிர்வாக உள்நுழைவு' },
   dashboard: { en: 'Dashboard', ta: 'டாஷ்போர்டு' },

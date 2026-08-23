@@ -91,3 +91,11 @@ export function label(
   if (!found) return '—'
   return lang === 'ta' ? found.ta : found.en
 }
+
+/** Local TVK brand assets under /public/assets/tvk/. Replace files keeping the same names. */
+export const TVK_ASSETS = {
+  flag: '/assets/tvk/tvk-flag.png',
+  logo: '/assets/tvk/logo.svg',
+  vijay: '/assets/tvk/vijay.svg',
+  ramesh: '/assets/tvk/ramesh.svg',
+} as const
