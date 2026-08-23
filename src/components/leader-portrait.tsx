@@ -52,8 +52,7 @@ export default function LeaderPortrait({
           frame
         )}
       >
-        {/* small yellow accent along the top of the white card */}
-        <div className="absolute inset-x-0 top-0 z-10 h-1 bg-tvk-yellow" />
+
         {!failed ? (
           <>
             {/* eslint-disable-next-line @next/next/no-img-element -- fixed-size local assets; width/height prevent shift */}
