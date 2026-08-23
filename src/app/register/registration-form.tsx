@@ -25,6 +25,35 @@ import type { DocumentType } from '@/lib/supabase/types'
 
 const DOC_ORDER: DocumentType[] = ['AADHAAR', 'VOTER_ID', 'TVK_ID', 'PHOTO']
 
+/** DOM order of form fields — used to jump to the first missing field on submit. */
+const FIELD_ORDER = [
+  'full_name',
+  'father_name',
+  'mobile',
+  'date_of_birth',
+  'email',
+  'address',
+  'aadhaar_number',
+  'voter_id',
+  'place',
+  'ward_number',
+  'religion',
+  'community',
+  'caste_category',
+  'occupation',
+  'blood_group',
+]
+
+function focusFirstError(errors: Record<string, unknown>) {
+  const key = [...FIELD_ORDER, ...DOC_ORDER.map((d) => `doc-${d}`)].find((k) => errors[k])
+  if (!key) return
+  requestAnimationFrame(() => {
+    const el = document.getElementById(key)
+    el?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    if (el instanceof HTMLElement) el.focus({ preventScroll: true })
+  })
+}
+
 type FormValues = {
   full_name: string
   father_name: string
@@ -115,7 +144,7 @@ export default function RegistrationForm({ lang }: { lang: Lang }) {
     return v ? t(v as DictKey) : undefined
   }
 
-  function validate(): boolean {
+  function validate(): Partial<Record<string, DictKey>> {
     const e: Partial<Record<string, DictKey>> = {}
     const v = values
     if (!v.full_name.trim()) e.full_name = 'errFullName'
@@ -147,8 +176,7 @@ export default function RegistrationForm({ lang }: { lang: Lang }) {
     for (const type of DOC_ORDER) {
       if (!files[type]) e[`doc-${type}`] = 'errDocRequired'
     }
-    setErrors(e)
-    return Object.keys(e).length === 0
+    return e
   }
 
   function validateFile(type: DocumentType, file: File | undefined): string | undefined {
@@ -194,9 +222,12 @@ export default function RegistrationForm({ lang }: { lang: Lang }) {
 
   async function handleSubmit() {
     if (uploadingRef.current) return
-    if (!validate()) {
+    const errs = validate()
+    if (Object.keys(errs).length > 0) {
+      setErrors(errs)
       setStatus('error')
-      setMessage(t('errReviewFields'))
+      setMessage(t('errSubmitRequired'))
+      focusFirstError(errs)
       return
     }
     setStatus('busy')
@@ -207,7 +238,8 @@ export default function RegistrationForm({ lang }: { lang: Lang }) {
     if (!res.ok) {
       setErrors((e) => ({ ...e, ...res.fieldErrors }))
       setStatus('error')
-      setMessage(res.message ? t('errReviewFields') : t('errReviewFields'))
+      setMessage(t('errReviewFields'))
+      focusFirstError(res.fieldErrors ?? {})
       return
     }
     if (res.duplicates && res.duplicates.length > 0 && !confirmDuplicate) {

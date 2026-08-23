@@ -15,7 +15,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   return (
     <div className="min-h-screen">
       <AdminNav lang={lang} />
-      <main className="px-4 pb-8 pt-20 sm:px-6 lg:ml-64 lg:px-8 lg:pt-8">{children}</main>
+      <main className="px-4 pb-24 pt-20 sm:px-6 lg:ml-64 lg:px-8 lg:pb-8 lg:pt-8">{children}</main>
     </div>
   )
 }

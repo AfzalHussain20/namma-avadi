@@ -115,7 +115,7 @@ export default function MemberProfile({
   const errText = (key: string): string | undefined =>
     errors[key] ? t(errors[key]) : undefined
 
-  function validate(): boolean {
+  function validate(): Partial<Record<string, string>> {
     const e: Record<string, DictKey> = {}
     if (!form.full_name.trim()) e.full_name = 'errFullName'
     if (!form.father_name.trim()) e.father_name = 'errFatherName'
@@ -141,7 +141,32 @@ export default function MemberProfile({
     if (!form.occupation.trim()) e.occupation = 'errOccupationRequired'
     if (!form.blood_group) e.blood_group = 'errBloodRequired'
     setErrors(e)
-    return Object.keys(e).length === 0
+    return e
+  }
+
+  function focusFirstError(errs: Record<string, unknown>) {
+    const ids: Record<string, string> = {
+      full_name: 'e-full_name',
+      father_name: 'e-father_name',
+      mobile: 'e-mobile',
+      date_of_birth: 'e-dob',
+      email: 'e-email',
+      address: 'e-address',
+      aadhaar_number: 'e-aadhaar',
+      voter_id: 'e-voter',
+      place: 'e-place',
+      ward_number: 'e-ward',
+      religion: 'e-religion',
+      community: 'e-community',
+      caste_category: 'e-caste',
+      occupation: 'e-occupation',
+      blood_group: 'e-blood',
+    }
+    const key = Object.keys(ids).find((k) => errs[k])
+    if (!key) return
+    const el = document.getElementById(ids[key])
+    el?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    if (el instanceof HTMLElement) el.focus({ preventScroll: true })
   }
 
   function validateFile(type: DocumentType, file: File | undefined): string | undefined {
@@ -160,8 +185,10 @@ export default function MemberProfile({
   }
 
   async function save() {
-    if (!validate()) {
-      setMessage({ type: 'error', text: t('errReviewFields') })
+    const errs = validate()
+    if (Object.keys(errs).length > 0) {
+      setMessage({ type: 'error', text: t('errSubmitRequired') })
+      focusFirstError(errs)
       return
     }
     setBusy(true)

@@ -123,6 +123,7 @@ const dict = {
   errOccupationRequired: { en: 'Occupation is required.', ta: 'தொழில் அவசியம்.' },
   errBloodRequired: { en: 'Please select a blood group.', ta: 'இரத்த வகையைத் தேர்ந்தெடுங்கள்.' },
   errReviewFields: { en: 'Please review the highlighted fields.', ta: 'குறிக்கப்பட்ட புலங்களை சரிபார்த்து சரிசெய்யுங்கள்.' },
+  errSubmitRequired: { en: 'Please fill all the required fields to submit the form.', ta: 'சமர்ப்பிக்க அனைத்து அவசியப் புலங்களையும் நிரப்புங்கள்.' },
   errFileType: { en: 'files are allowed only.', ta: 'கோப்புகள் மட்டுமே அனுமதிக்கப்படும்.' },
   errFileSize: { en: 'File size must be 5 MB or less.', ta: 'கோப்பின் அளவு 5 MB-க்கு குறைவாக இருக்க வேண்டும்.' },
   errDocRequired: { en: 'This document is required.', ta: 'இந்த ஆவணம் அவசியம்.' },

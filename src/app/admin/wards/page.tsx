@@ -77,8 +77,8 @@ export default async function WardsPage() {
         </section>
       ))}
 
-      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-        <div className="overflow-x-auto">
+      <div className="hidden overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm md:block">
+        <div className="max-h-[70vh] overflow-auto">
           <table className="w-full min-w-[480px] border-collapse">
             <thead>
               <tr className="border-b border-slate-100 bg-slate-50/70">

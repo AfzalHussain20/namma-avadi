@@ -1,5 +1,12 @@
 export type Place = 'THIRUNINRAVUR' | 'AVADI' | 'THIRUVERKADU'
-export type Religion = 'HINDU' | 'MUSLIM' | 'CHRISTIAN' | 'OTHER'
+export type Religion =
+  | 'HINDU'
+  | 'MUSLIM'
+  | 'CHRISTIAN'
+  | 'SIKH'
+  | 'BUDDHIST'
+  | 'JAIN'
+  | 'OTHER'
 export type CasteCategory = 'OC' | 'BC' | 'BCM' | 'MBC_DNC' | 'SC' | 'ST'
 export type BloodGroup = 'A+' | 'A-' | 'B+' | 'B-' | 'O+' | 'O-' | 'AB+' | 'AB-'
 
@@ -18,10 +25,14 @@ export const PLACES: (LabeledOption<Place> & { maxWard: number })[] = [
 
 export const PLACE_VALUES = PLACES.map((p) => p.value) as [Place, ...Place[]]
 
+/** Major religions practised in India. */
 export const RELIGIONS: LabeledOption<Religion>[] = [
   { value: 'HINDU', en: 'Hindu', ta: 'இந்து' },
   { value: 'MUSLIM', en: 'Muslim', ta: 'இஸ்லாம்' },
   { value: 'CHRISTIAN', en: 'Christian', ta: 'கிறிஸ்தவம்' },
+  { value: 'SIKH', en: 'Sikh', ta: 'சீக்கியம்' },
+  { value: 'BUDDHIST', en: 'Buddhist', ta: 'பௌத்தம்' },
+  { value: 'JAIN', en: 'Jain', ta: 'சமணம்' },
   { value: 'OTHER', en: 'Other', ta: 'மற்றவை' },
 ]
 
