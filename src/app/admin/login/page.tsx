@@ -15,7 +15,7 @@ export default async function LoginPage() {
   const t = getT(lang)
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4 py-12">
+    <div className="page-background relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-12">
       <div className="pointer-events-none absolute -top-32 -left-24 h-80 w-80 rounded-full bg-tvk-yellow/30 blur-3xl" />
       <div className="pointer-events-none absolute -right-24 -bottom-32 h-80 w-80 rounded-full bg-tvk-red/10 blur-3xl" />
       <div className="absolute top-4 right-4 z-10">

@@ -8,16 +8,17 @@
 }
 
 :root {
-  --background: #f8f8f6;
+  --background: #faf9f5;
   --foreground: #171717;
 }
 
 @theme {
-  /* TVK brand palette — controlled UI tokens inspired by the official flag */
+  /* TVK brand palette — application design tokens kept consistent with the
+     official party flag artwork. Not an official published HEX specification. */
   --color-tvk-yellow: #ffc400;
-  --color-tvk-yellow-soft: #fff4c2;
+  --color-tvk-yellow-soft: #fff6cc;
   --color-tvk-red: #a50000;
-  --color-tvk-dark-red: #7a0000;
+  --color-tvk-dark-red: #780000;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -49,19 +50,19 @@ body {
 
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:pointer-events-none disabled:opacity-60;
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tvk-yellow disabled:pointer-events-none disabled:opacity-60;
   }
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm shadow-red-900/20 transition-all hover:bg-primary-hover hover:shadow-md hover:shadow-red-900/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:pointer-events-none disabled:opacity-60;
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm shadow-red-900/20 transition-all hover:bg-primary-hover hover:shadow-md hover:shadow-red-900/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tvk-yellow disabled:pointer-events-none disabled:opacity-60;
   }
   .btn-outline {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-foreground shadow-sm transition-all hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:pointer-events-none disabled:opacity-60;
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-foreground shadow-sm transition-all hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tvk-yellow disabled:pointer-events-none disabled:opacity-60;
   }
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:pointer-events-none disabled:opacity-60;
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tvk-yellow disabled:pointer-events-none disabled:opacity-60;
   }
   .btn-danger {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-destructive px-4 py-2 text-sm font-semibold text-destructive-foreground shadow-sm transition-colors hover:bg-danger/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:pointer-events-none disabled:opacity-60;
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-destructive px-4 py-2 text-sm font-semibold text-destructive-foreground shadow-sm transition-colors hover:bg-danger/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tvk-yellow disabled:pointer-events-none disabled:opacity-60;
   }
   .btn-sm {
     @apply px-3 py-1.5 text-xs;
@@ -111,9 +112,38 @@ body {
     @apply px-4 py-3 text-sm text-foreground;
   }
 
-  /* TVK brand accent line — thin yellow→red bar used under headers/footers */
+  /* TVK brand accent line — thin yellow→red bar used along the very top of headers */
   .brand-bar {
-    @apply h-1 w-full;
+    @apply h-[3px] w-full shrink-0;
     background: linear-gradient(90deg, var(--color-tvk-yellow) 0%, var(--color-tvk-yellow) 60%, var(--color-tvk-red) 60%, var(--color-tvk-red) 100%);
+  }
+
+  /* Subtle premium TVK page background — felt, not noticed.
+     Fixed, low-contrast glows that never interfere with content. */
+  .page-background {
+    position: relative;
+    isolation: isolate;
+  }
+  .page-background::before,
+  .page-background::after {
+    content: '';
+    position: fixed;
+    border-radius: 9999px;
+    pointer-events: none;
+    z-index: -1;
+  }
+  .page-background::before {
+    width: 500px;
+    height: 500px;
+    top: -250px;
+    left: -150px;
+    background: rgba(255, 196, 0, 0.07);
+  }
+  .page-background::after {
+    width: 450px;
+    height: 450px;
+    bottom: -220px;
+    right: -150px;
+    background: rgba(165, 0, 0, 0.035);
   }
 }

@@ -92,10 +92,17 @@ export function label(
   return lang === 'ta' ? found.ta : found.en
 }
 
-/** Local TVK brand assets under /public/assets/tvk/. Replace files keeping the same names. */
+/** Official TVK brand assets under /public/assets/tvk/.
+ *  flag: official party flag artwork (tvkvijay.com asset server)
+ *  vijay / ramesh: official candidate photographs (tvkassets.minsky.studio) */
 export const TVK_ASSETS = {
   flag: '/assets/tvk/tvk-flag.png',
-  logo: '/assets/tvk/logo.svg',
-  vijay: '/assets/tvk/vijay.svg',
-  ramesh: '/assets/tvk/ramesh.svg',
+  vijay: '/assets/tvk/vijay.jpg',
+  ramesh: '/assets/tvk/ramesh-kumar.jpg',
+} as const
+
+/** Official TVK web destinations. */
+export const TVK_LINKS = {
+  home: 'https://tvkvijay.com/',
+  candidates: 'https://tvkvijay.com/en/election-candidates/tamilnadu',
 } as const

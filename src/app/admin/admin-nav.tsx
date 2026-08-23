@@ -66,12 +66,12 @@ function Brand({ compact, t }: { compact?: boolean; t: (key: DictKey) => string 
   return (
     <div className="flex items-center gap-3">
       <SmartImage
-        src={TVK_ASSETS.logo}
-        alt="TVK"
+        src={TVK_ASSETS.flag}
+        alt={t('flagAlt')}
         label="TVK"
         aspect="aspect-square"
         contain
-        className="h-10 w-10 shrink-0 rounded-xl shadow-sm shadow-red-900/20"
+        className="h-10 w-10 shrink-0 rounded-xl border border-border p-0.5"
       />
       {!compact && (
         <div>
