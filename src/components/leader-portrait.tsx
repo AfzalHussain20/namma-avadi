@@ -71,7 +71,7 @@ export default function LeaderPortrait({
           </div>
         )}
       </div>
-      <figcaption className="mt-3 max-w-[12rem]">
+      <figcaption className="mt-3 max-w-[14rem]">
         <p className="text-xs font-bold leading-snug text-foreground sm:text-sm">{name}</p>
         <p className="mt-0.5 text-[10px] font-medium leading-snug text-muted-foreground sm:text-xs">{role}</p>
       </figcaption>

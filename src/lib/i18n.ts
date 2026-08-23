@@ -16,7 +16,7 @@ const dict = {
   leaderVijayName: { en: 'C. Joseph Vijay', ta: 'சி. ஜோசப் விஜய்' },
   leaderVijayRole: { en: 'Chief Minister of Tamil Nadu', ta: 'தமிழ்நாடு முதல்வர்' },
   leaderRameshName: { en: 'R. Ramesh Kumar', ta: 'ஆர். ரமேஷ் குமார்' },
-  leaderRameshRole: { en: 'Avadi · Party Administrator', ta: 'ஆவடி · கட்சி நிர்வாகி' },
+  leaderRameshRole: { en: 'Avadi Constituency — Member of the Legislative Assembly', ta: 'ஆவடி தொகுதி — சட்டமன்ற உறுப்பினர்' },
   leaderVijayAlt: { en: 'C. Joseph Vijay — Tamilaga Vettri Kazhagam', ta: 'சி. ஜோசப் விஜய் — தமிழக வெற்றிக் கழகம்' },
   leaderRameshAlt: {
     en: 'R. Ramesh Kumar — Avadi, Tamilaga Vettri Kazhagam',
