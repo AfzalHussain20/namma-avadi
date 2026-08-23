@@ -213,6 +213,7 @@ const dict = {
   viewAllMembers: { en: 'View all members', ta: 'எல்லா உறுப்பினர்களையும் பார்' },
   viewWardOverview: { en: 'View ward overview', ta: 'வார்டு மேலோட்டத்தைப் பார்' },
   membersByWard: { en: 'Members by Ward', ta: 'வார்டு வாரியாக உறுப்பினர்கள்' },
+  wardsUnit: { en: 'Wards', ta: 'வார்டுகள்' },
   recentRegistrations: { en: 'Recent Registrations', ta: 'சமீபத்திய பதிவுகள்' },
   noMembersYet: { en: 'No members yet', ta: 'இன்னும் உறுப்பினர்கள் இல்லை' },
   noMembersHint: {
@@ -342,9 +343,9 @@ export type DictKey = keyof typeof dict
 
 /** Translate helper: t('members') -> localized string. */
 export function getT(lang: Lang): (key: DictKey) => string {
-  return (key: DictKey) => dict[key][lang]
+  return (key: DictKey) => dict[key]?.[lang] ?? key
 }
 
 export function tr(lang: Lang, key: DictKey): string {
-  return dict[key][lang]
+  return dict[key]?.[lang] ?? key
 }

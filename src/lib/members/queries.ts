@@ -2,6 +2,7 @@ import 'server-only'
 
 import { createClient } from '@/lib/supabase/server'
 import { getSignedUrls } from '@/lib/storage'
+import { PLACES } from '@/lib/constants'
 import type { Database, DocumentType, MemberStatus } from '@/lib/supabase/types'
 
 export type MemberRow = Database['public']['Tables']['members']['Row']
@@ -191,4 +192,76 @@ export async function getWards(): Promise<WardRow[]> {
     .order('ward_number', { ascending: true })
   if (error || !data) return []
   return data as WardRow[]
+}
+
+export interface WardStat {
+  place: string
+  ward_number: number
+  ward_name: string
+  member_count: number
+}
+
+export interface WardStatsResult {
+  /** Every ward of every place, in canonical order — zero-count wards included. */
+  rows: WardStat[]
+  total: number
+  perPlace: { place: string; total: number; wardCount: number }[]
+}
+
+/**
+ * Complete place-scoped ward statistics.
+ * `get_dashboard_stats` only returns wards that have members; this merges the
+ * result with the full ward grid from PLACES so no ward or place is ever missing.
+ */
+export async function getWardStats(): Promise<WardStatsResult> {
+  const supabase = await createClient()
+  const { data, error } = await supabase.rpc('get_dashboard_stats')
+
+  const counts = new Map<string, number>()
+  let total = 0
+  for (const row of data ?? []) {
+    counts.set(`${row.place}-${row.ward_number}`, row.member_count)
+    total += row.member_count
+  }
+
+  const rows: WardStat[] = []
+  const perPlace: WardStatsResult['perPlace'] = []
+  for (const p of PLACES) {
+    let placeTotal = 0
+    for (let w = 1; w <= p.maxWard; w++) {
+      const count = counts.get(`${p.value}-${w}`) ?? 0
+      placeTotal += count
+      rows.push({
+        place: p.value,
+        ward_number: w,
+        ward_name: `${p.en} Ward ${w}`,
+        member_count: count,
+      })
+    }
+    perPlace.push({ place: p.value, total: placeTotal, wardCount: p.maxWard })
+  }
+
+  if (error) {
+    // Still render the complete (empty) grid rather than failing the page.
+    console.error('get_dashboard_stats failed:', error.message)
+  }
+
+  return { rows, total, perPlace }
+}
+
+export function groupWardStatsByPlace(rows: WardStat[]): {
+  place: string
+  maxWard: number
+  rows: WardStat[]
+  total: number
+}[] {
+  return PLACES.map((p) => {
+    const placeRows = rows.filter((r) => r.place === p.value)
+    return {
+      place: p.value,
+      maxWard: p.maxWard,
+      rows: placeRows,
+      total: placeRows.reduce((sum, r) => sum + r.member_count, 0),
+    }
+  })
 }

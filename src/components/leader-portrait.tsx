@@ -64,7 +64,8 @@ export default function LeaderPortrait({
               alt={alt}
               width={300}
               height={400}
-              loading="lazy"
+              loading="eager"
+              fetchPriority="high"
               decoding="async"
               draggable={false}
               onLoad={() => setLoaded(true)}

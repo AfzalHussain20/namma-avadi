@@ -33,7 +33,9 @@ export default function SmartImage({
         <img
           src={src}
           alt={alt}
-          loading="lazy"
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
           draggable={false}
           onError={() => setFailed(true)}
           className={cn('h-full w-full', contain ? 'object-contain' : 'object-cover object-top')}

@@ -2,10 +2,10 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import QRCode from 'qrcode'
 import { requireAdmin } from '@/lib/dal'
+import { PLACES } from '@/lib/constants'
 import { getT } from '@/lib/i18n'
 import { getLang } from '@/lib/i18n-server'
-import { getPhotoThumbUrls, getRecentMembers } from '@/lib/members/queries'
-import { createClient } from '@/lib/supabase/server'
+import { getPhotoThumbUrls, getRecentMembers, getWardStats, groupWardStatsByPlace } from '@/lib/members/queries'
 import { formatDate } from '@/lib/utils'
 import RegistrationShare from './registration-share'
 
@@ -25,26 +25,12 @@ export default async function DashboardPage() {
     errorCorrectionLevel: 'M',
   })
 
-  const supabase = await createClient()
-  const [statsResult, recent] = await Promise.all([
-    supabase.rpc('get_dashboard_stats'),
-    getRecentMembers(5),
-  ])
-
-  const { data, error } = statsResult
-
-  if (error || !data || data.length === 0) {
-    return (
-      <div className="card p-8">
-        <h2 className="text-base font-semibold">{t('unableDashboard')}</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          {error?.message || t('unableWardData')}
-        </p>
-      </div>
-    )
+  const [stats, recent] = await Promise.all([getWardStats(), getRecentMembers(5)])
+  const groups = groupWardStatsByPlace(stats.rows)
+  const placeLabel = (place: string): string => {
+    const p = PLACES.find((x) => x.value === place)
+    return p ? (lang === 'ta' ? p.ta : p.en) : place
   }
-
-  const total = data.reduce((sum, row) => sum + row.member_count, 0)
   const recentPhotoUrls = await getPhotoThumbUrls(recent.map((m) => m.id))
 
   return (
@@ -63,7 +49,7 @@ export default async function DashboardPage() {
         <div className="relative">
           <p className="text-sm font-medium text-tvk-yellow-soft">{t('totalMembersLabel')}</p>
           <p className="mt-1 text-5xl font-bold tabular-nums tracking-tight sm:text-6xl">
-            {total.toLocaleString('en-IN')}
+            {stats.total.toLocaleString('en-IN')}
           </p>
           <p className="mt-3 text-sm text-tvk-yellow-soft">{t('heroSubline')}</p>
           <div className="mt-6 flex flex-wrap gap-3">
@@ -83,10 +69,32 @@ export default async function DashboardPage() {
         </div>
       </div>
 
+      {/* Place summaries */}
+      <section>
+        <h2 className="mb-3 text-lg font-semibold text-slate-900">{t('allPlaces')}</h2>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {stats.perPlace.map((p) => (
+            <Link
+              key={p.place}
+              href={`/admin/members?place=${p.place}`}
+              className="card group p-5 transition-all hover:-translate-y-0.5 hover:border-tvk-yellow hover:shadow-md"
+            >
+              <p className="text-base font-bold text-slate-900 group-hover:text-tvk-red">{placeLabel(p.place)}</p>
+              <p className="mt-2 text-4xl font-bold tabular-nums text-slate-900 group-hover:text-tvk-red">
+                {p.total.toLocaleString('en-IN')}
+              </p>
+              <p className="mt-1 text-xs text-slate-400">
+                {t('membersUnit')} · {p.wardCount} {t('wardsUnit')}
+              </p>
+            </Link>
+          ))}
+        </div>
+      </section>
+
       {/* Member registration QR + share */}
       <RegistrationShare qrDataUrl={qrDataUrl} url={registerUrl} lang={lang} />
 
-      {/* Place & ward distribution */}
+      {/* Members by ward, grouped by place — every ward shown, zero counts included */}
       <section>
         <div className="mb-3 flex items-center justify-between">
           <h2 className="text-lg font-semibold text-slate-900">{t('membersByWard')}</h2>
@@ -94,24 +102,41 @@ export default async function DashboardPage() {
             {t('viewAll')} →
           </Link>
         </div>
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-          {data.map((row) => (
-            <Link
-              key={`${row.place}-${row.ward_number}`}
-              href={`/admin/members?place=${row.place}&ward=${row.ward_number}`}
-              className="card group p-5 transition-all hover:-translate-y-0.5 hover:border-tvk-yellow hover:shadow-md"
-            >
-              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-                {lang === 'ta'
-                  ? `${t('wardN')} ${row.ward_number}`
-                  : `Ward ${row.ward_number}`}
-                <span className="ml-1 font-normal normal-case text-slate-400">· {row.ward_name}</span>
-              </p>
-              <p className="mt-2 text-3xl font-bold tabular-nums text-slate-900 group-hover:text-tvk-red">
-                {row.member_count.toLocaleString('en-IN')}
-              </p>
-              <p className="mt-1 text-xs text-slate-400">{t('membersUnit')}</p>
-            </Link>
+        <div className="space-y-6">
+          {groups.map((group) => (
+            <div key={group.place}>
+              <div className="mb-2 flex items-baseline justify-between">
+                <h3 className="text-sm font-bold uppercase tracking-wide text-slate-500">
+                  {placeLabel(group.place)}
+                </h3>
+                <Link
+                  href={`/admin/members?place=${group.place}`}
+                  className="text-xs font-semibold text-tvk-red hover:text-tvk-dark-red"
+                >
+                  {t('viewAll')} →
+                </Link>
+              </div>
+              <div className="grid grid-cols-3 gap-2.5 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-9">
+                {group.rows.map((row) => (
+                  <Link
+                    key={`${row.place}-${row.ward_number}`}
+                    href={`/admin/members?place=${row.place}&ward=${row.ward_number}`}
+                    className={
+                      row.member_count > 0
+                        ? 'card group p-3 text-center transition-all hover:-translate-y-0.5 hover:border-tvk-yellow hover:shadow-md'
+                        : 'card p-3 text-center opacity-60 transition-all hover:opacity-100 hover:border-tvk-yellow'
+                    }
+                  >
+                    <p className="text-[11px] font-semibold text-slate-500">
+                      {lang === 'ta' ? `வார்டு ${row.ward_number}` : `Ward ${row.ward_number}`}
+                    </p>
+                    <p className="mt-1 text-lg font-bold tabular-nums text-slate-900 group-hover:text-tvk-red">
+                      {row.member_count.toLocaleString('en-IN')}
+                    </p>
+                  </Link>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       </section>
@@ -143,7 +168,7 @@ export default async function DashboardPage() {
                       <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-tvk-yellow-soft to-tvk-yellow text-sm font-bold text-tvk-dark-red">
                         {photo ? (
                           // eslint-disable-next-line @next/next/no-img-element
-                          <img src={photo} alt="" className="h-full w-full object-cover" />
+                          <img src={photo} alt="" loading="eager" className="h-full w-full object-cover" />
                         ) : (
                           <span>{m.full_name.charAt(0)}</span>
                         )}
@@ -151,7 +176,7 @@ export default async function DashboardPage() {
                       <div className="min-w-0 flex-1">
                         <p className="truncate font-semibold text-slate-900">{m.full_name}</p>
                         <p className="truncate text-sm text-slate-500">
-                          {m.father_name} · {t('wardN')} {m.ward_number}
+                          {placeLabel(m.place)} · {lang === 'ta' ? `வார்டு ${m.ward_number}` : `Ward ${m.ward_number}`}
                         </p>
                       </div>
                       <div className="hidden text-right sm:block">
