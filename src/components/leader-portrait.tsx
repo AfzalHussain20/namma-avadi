@@ -34,7 +34,6 @@ export default function LeaderPortrait({
   width?: string
   className?: string
 }) {
-  const [loaded, setLoaded] = useState(false)
   const [failed, setFailed] = useState(false)
 
   const frame =
@@ -57,7 +56,6 @@ export default function LeaderPortrait({
         <div className="absolute inset-x-0 top-0 z-10 h-1 bg-tvk-yellow" />
         {!failed ? (
           <>
-            {!loaded && <div className="absolute inset-0 animate-pulse bg-slate-100" aria-hidden="true" />}
             {/* eslint-disable-next-line @next/next/no-img-element -- fixed-size local assets; width/height prevent shift */}
             <img
               src={src}
@@ -66,14 +64,10 @@ export default function LeaderPortrait({
               height={400}
               loading="eager"
               fetchPriority="high"
-              decoding="async"
+              decoding="sync"
               draggable={false}
-              onLoad={() => setLoaded(true)}
               onError={() => setFailed(true)}
-              className={cn(
-                'aspect-[3/4] h-auto w-full object-cover object-[center_top] transition-opacity duration-300',
-                loaded ? 'opacity-100' : 'opacity-0'
-              )}
+              className="aspect-[3/4] h-auto w-full object-cover object-[center_top]"
             />
           </>
         ) : (

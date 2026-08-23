@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Noto_Sans_Tamil } from "next/font/google";
+import { TVK_ASSETS } from "@/lib/constants";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -32,6 +33,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${notoTamil.variable} h-full antialiased`}
     >
+      <head>
+        {/* Preload critical hero images so they render on first paint */}
+        <link rel="preload" href={TVK_ASSETS.flag} as="image" />
+        <link rel="preload" href={TVK_ASSETS.vijay} as="image" />
+        <link rel="preload" href={TVK_ASSETS.ramesh} as="image" />
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

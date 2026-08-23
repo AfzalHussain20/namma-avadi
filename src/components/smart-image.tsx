@@ -35,7 +35,7 @@ export default function SmartImage({
           alt={alt}
           loading="eager"
           fetchPriority="high"
-          decoding="async"
+          decoding="sync"
           draggable={false}
           onError={() => setFailed(true)}
           className={cn('h-full w-full', contain ? 'object-contain' : 'object-cover object-top')}
